@@ -1,0 +1,8 @@
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\ResolveAssemblyReference.cache
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\LineComparer.Properties.Resources.resources
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\LineComparer.csproj.GenerateResource.Cache
+C:\PROJECTS\_TEST\LineComparer\LineComparer\bin\Debug\LineComparer.exe
+C:\PROJECTS\_TEST\LineComparer\LineComparer\bin\Debug\LineComparer.pdb
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\LineComparer.exe
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\LineComparer.pdb
+C:\PROJECTS\_TEST\LineComparer\LineComparer\obj\Debug\LineComparer.Form1.resources
