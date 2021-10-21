@@ -1,4 +1,4 @@
-# MostParalleLines
+# Most Parallel Lines
 
 Detect Most Same &amp; Parallel Lines for snap track(s) to road map
 
