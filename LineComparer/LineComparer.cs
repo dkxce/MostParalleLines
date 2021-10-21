@@ -1,6 +1,6 @@
 /****************************************************
 *                                                   *
-*     C# Line/Polyline Most Parrallel Comparer      *
+*      C# Line/Polyline Most Parallel Comparer      *
 *   Basically usage for snap track(s) to road map   *
 *              milokz@gmail.com                     *
 *                                                   *
@@ -16,24 +16,24 @@ namespace LineComparer
     public class LineComparer
     {
         /// <summary>
-        ///     Максимальное отклонение при сопоставлении векторов в метрах (для географических координат)
+        ///     ГЊГ ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г®ГІГЄГ«Г®Г­ГҐГ­ГЁГҐ ГЇГ°ГЁ Г±Г®ГЇГ®Г±ГІГ ГўГ«ГҐГ­ГЁГЁ ГўГҐГЄГІГ®Г°Г®Гў Гў Г¬ГҐГІГ°Г Гµ (Г¤Г«Гї ГЈГҐГ®ГЈГ°Г ГґГЁГ·ГҐГ±ГЄГЁГµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ)
         /// </summary>
         public static int max_vect_error_meters = 15;
 
         /// <summary>
-        ///     Максимальное отклонение при сопоставлении векторов в метрах (для точечных координат)
+        ///     ГЊГ ГЄГ±ГЁГ¬Г Г«ГјГ­Г®ГҐ Г®ГІГЄГ«Г®Г­ГҐГ­ГЁГҐ ГЇГ°ГЁ Г±Г®ГЇГ®Г±ГІГ ГўГ«ГҐГ­ГЁГЁ ГўГҐГЄГІГ®Г°Г®Гў Гў Г¬ГҐГІГ°Г Гµ (Г¤Г«Гї ГІГ®Г·ГҐГ·Г­Г»Гµ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІ)
         /// </summary>
         public static int max_vect_error_points = 10;
 
         /// <summary>
-        ///     Проверяем совпадают ли векторы дорог/линий
+        ///     ГЏГ°Г®ГўГҐГ°ГїГҐГ¬ Г±Г®ГўГЇГ Г¤Г ГѕГІ Г«ГЁ ГўГҐГЄГІГ®Г°Г» Г¤Г®Г°Г®ГЈ/Г«ГЁГ­ГЁГ©
         /// </summary>
-        /// <param name="mainLine">Основная линия (ожидаемо более короткая)</param>
-        /// <param name="toCheckLine">Сравниваемая линия (ожидаемо более длинная)</param>
-        /// <param name="isGeo">Географические координаты</param>
-        /// <param name="samedir">Сонаправлены</param>
-        /// <param name="distance">Расстояние</param>
-        /// <param name="crossPoint">Точка пересечения</param>
+        /// <param name="mainLine">ГЋГ±Г­Г®ГўГ­Г Гї Г«ГЁГ­ГЁГї (Г®Г¦ГЁГ¤Г ГҐГ¬Г® ГЎГ®Г«ГҐГҐ ГЄГ®Г°Г®ГІГЄГ Гї)</param>
+        /// <param name="toCheckLine">Г‘Г°Г ГўГ­ГЁГўГ ГҐГ¬Г Гї Г«ГЁГ­ГЁГї (Г®Г¦ГЁГ¤Г ГҐГ¬Г® ГЎГ®Г«ГҐГҐ Г¤Г«ГЁГ­Г­Г Гї)</param>
+        /// <param name="isGeo">ГѓГҐГ®ГЈГ°Г ГґГЁГ·ГҐГ±ГЄГЁГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ»</param>
+        /// <param name="samedir">Г‘Г®Г­Г ГЇГ°Г ГўГ«ГҐГ­Г»</param>
+        /// <param name="distance">ГђГ Г±Г±ГІГ®ГїГ­ГЁГҐ</param>
+        /// <param name="crossPoint">Г’Г®Г·ГЄГ  ГЇГҐГ°ГҐГ±ГҐГ·ГҐГ­ГЁГї</param>
         /// <returns></returns>
         public static bool isMostParallel(PointF[] mainLine, PointF[] toCheckLine, bool isGeo, out bool samedir, out double distance, out PointF crossPoint)
         {
@@ -41,15 +41,15 @@ namespace LineComparer
             distance = double.MaxValue;
             crossPoint = default(PointF);
 
-            // Строим проекцию основной линии (mainLine) на сопоставляемую (toCheckLine)
-            // Основная линия преимущественно должна быть короче сопоставялемой
-            int[] jj = new int[mainLine.Length]; // проверяем сонаправленность
+            // Г‘ГІГ°Г®ГЁГ¬ ГЇГ°Г®ГҐГЄГ¶ГЁГѕ Г®Г±Г­Г®ГўГ­Г®Г© Г«ГЁГ­ГЁГЁ (mainLine) Г­Г  Г±Г®ГЇГ®Г±ГІГ ГўГ«ГїГҐГ¬ГіГѕ (toCheckLine)
+            // ГЋГ±Г­Г®ГўГ­Г Гї Г«ГЁГ­ГЁГї ГЇГ°ГҐГЁГ¬ГіГ№ГҐГ±ГІГўГҐГ­Г­Г® Г¤Г®Г«Г¦Г­Г  ГЎГ»ГІГј ГЄГ®Г°Г®Г·ГҐ Г±Г®ГЇГ®Г±ГІГ ГўГїГ«ГҐГ¬Г®Г©
+            int[] jj = new int[mainLine.Length]; // ГЇГ°Г®ГўГҐГ°ГїГҐГ¬ Г±Г®Г­Г ГЇГ°Г ГўГ«ГҐГ­Г­Г®Г±ГІГј
             for (int n = 0; n < mainLine.Length; n++)
             {
-                //все точки дороги из main не должны быть за границами всех участков toCheckLine
+                //ГўГ±ГҐ ГІГ®Г·ГЄГЁ Г¤Г®Г°Г®ГЈГЁ ГЁГ§ main Г­ГҐ Г¤Г®Г«Г¦Г­Г» ГЎГ»ГІГј Г§Г  ГЈГ°Г Г­ГЁГ¶Г Г¬ГЁ ГўГ±ГҐГµ ГіГ·Г Г±ГІГЄГ®Гў toCheckLine
                 bool main_inside_check = false;
 
-                //минимальное расстояние до проекции точки
+                //Г¬ГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ Г¤Г® ГЇГ°Г®ГҐГЄГ¶ГЁГЁ ГІГ®Г·ГЄГЁ
                 double min_dist2line = double.MaxValue;
                 
                 for (int j = 1; j < toCheckLine.Length; j++)
@@ -58,9 +58,9 @@ namespace LineComparer
                     bool curr_projPointOutOfLine;
                     double curr_dist2line = DistanceFromPointToLine(mainLine[n], toCheckLine[j - 1], toCheckLine[j], out curr_projPoint, out curr_projPointOutOfLine, isGeo);
 
-                    if (curr_projPointOutOfLine) // точка за границами участка линии
+                    if (curr_projPointOutOfLine) // ГІГ®Г·ГЄГ  Г§Г  ГЈГ°Г Г­ГЁГ¶Г Г¬ГЁ ГіГ·Г Г±ГІГЄГ  Г«ГЁГ­ГЁГЁ
                         continue;
-                    else // точка проекции лежит на участке линии
+                    else // ГІГ®Г·ГЄГ  ГЇГ°Г®ГҐГЄГ¶ГЁГЁ Г«ГҐГ¦ГЁГІ Г­Г  ГіГ·Г Г±ГІГЄГҐ Г«ГЁГ­ГЁГЁ
                         main_inside_check = true;
 
                     if (curr_dist2line < min_dist2line)
@@ -70,9 +70,9 @@ namespace LineComparer
                     };
                 };
 
-                distance = min_dist2line; // минимальная длина перпендикуляра к линии
+                distance = min_dist2line; // Г¬ГЁГ­ГЁГ¬Г Г«ГјГ­Г Гї Г¤Г«ГЁГ­Г  ГЇГҐГ°ГЇГҐГ­Г¤ГЁГЄГіГ«ГїГ°Г  ГЄ Г«ГЁГ­ГЁГЁ
 
-                if (!main_inside_check) return false; // если точка дороги за границами всех участков линии - дороги не совпадают
+                if (!main_inside_check) return false; // ГҐГ±Г«ГЁ ГІГ®Г·ГЄГ  Г¤Г®Г°Г®ГЈГЁ Г§Г  ГЈГ°Г Г­ГЁГ¶Г Г¬ГЁ ГўГ±ГҐГµ ГіГ·Г Г±ГІГЄГ®Гў Г«ГЁГ­ГЁГЁ - Г¤Г®Г°Г®ГЈГЁ Г­ГҐ Г±Г®ГўГЇГ Г¤Г ГѕГІ
 
                 if (isGeo)
                 {
@@ -84,8 +84,8 @@ namespace LineComparer
                 };
             };
 
-            // проверяем сонаправленность дорог
-            if (jj[0] == jj[mainLine.Length - 1]) // если совпадает только 1 участок
+            // ГЇГ°Г®ГўГҐГ°ГїГҐГ¬ Г±Г®Г­Г ГЇГ°Г ГўГ«ГҐГ­Г­Г®Г±ГІГј Г¤Г®Г°Г®ГЈ
+            if (jj[0] == jj[mainLine.Length - 1]) // ГҐГ±Г«ГЁ Г±Г®ГўГЇГ Г¤Г ГҐГІ ГІГ®Г«ГјГЄГ® 1 ГіГ·Г Г±ГІГ®ГЄ
             {
                 // CHECK ANGLE
                 double xa = mainLine[mainLine.Length - 1].X - mainLine[0].X;
@@ -101,10 +101,10 @@ namespace LineComparer
 
                 samedir = ud < (Math.PI / 2.0); // 90 degrees
             }
-            else // если совпадает несколько участков
+            else // ГҐГ±Г«ГЁ Г±Г®ГўГЇГ Г¤Г ГҐГІ Г­ГҐГ±ГЄГ®Г«ГјГЄГ® ГіГ·Г Г±ГІГЄГ®Гў
                 samedir = jj[0] < jj[mainLine.Length - 1];
 
-            // Пересекаются ли 
+            // ГЏГҐГ°ГҐГ±ГҐГЄГ ГѕГІГ±Гї Г«ГЁ 
             for(int a = 1;a<mainLine.Length;a++)
                 for (int b = 1; b < toCheckLine.Length; b++)
                 {
@@ -121,7 +121,7 @@ namespace LineComparer
         }
 
         /// <summary>
-        ///     Находим точку пересечения линий
+        ///     ГЌГ ГµГ®Г¤ГЁГ¬ ГІГ®Г·ГЄГі ГЇГҐГ°ГҐГ±ГҐГ·ГҐГ­ГЁГї Г«ГЁГ­ГЁГ©
         /// </summary>
         /// <param name="twoPointsLineA"></param>
         /// <param name="twoPointsLineB"></param>
@@ -224,7 +224,7 @@ namespace LineComparer
         }
 
         /// <summary>
-        ///     Суммарная длина линии
+        ///     Г‘ГіГ¬Г¬Г Г°Г­Г Гї Г¤Г«ГЁГ­Г  Г«ГЁГ­ГЁГЁ
         /// </summary>
         /// <param name="line"></param>
         /// <param name="isGeo"></param>
@@ -244,13 +244,13 @@ namespace LineComparer
         }
 
         /// <summary>
-        ///     Минимальное расстояние от точки до прямой
+        ///     ГЊГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ Г®ГІ ГІГ®Г·ГЄГЁ Г¤Г® ГЇГ°ГїГ¬Г®Г©
         /// </summary>
-        /// <param name="pt">точка</param>
-        /// <param name="lineStart">начальная точка отрезка</param>
-        /// <param name="lineEnd">конечная точка отрезка</param>
-        /// <param name="pointOnLine">Точка-проекция (перпендикуляр) к линии</param>
-        /// <param name="outside">Точка-проекция находится на линии за пределами отрезка</param>
+        /// <param name="pt">ГІГ®Г·ГЄГ </param>
+        /// <param name="lineStart">Г­Г Г·Г Г«ГјГ­Г Гї ГІГ®Г·ГЄГ  Г®ГІГ°ГҐГ§ГЄГ </param>
+        /// <param name="lineEnd">ГЄГ®Г­ГҐГ·Г­Г Гї ГІГ®Г·ГЄГ  Г®ГІГ°ГҐГ§ГЄГ </param>
+        /// <param name="pointOnLine">Г’Г®Г·ГЄГ -ГЇГ°Г®ГҐГЄГ¶ГЁГї (ГЇГҐГ°ГЇГҐГ­Г¤ГЁГЄГіГ«ГїГ°) ГЄ Г«ГЁГ­ГЁГЁ</param>
+        /// <param name="outside">Г’Г®Г·ГЄГ -ГЇГ°Г®ГҐГЄГ¶ГЁГї Г­Г ГµГ®Г¤ГЁГІГ±Гї Г­Г  Г«ГЁГ­ГЁГЁ Г§Г  ГЇГ°ГҐГ¤ГҐГ«Г Г¬ГЁ Г®ГІГ°ГҐГ§ГЄГ </param>
         /// <returns></returns>
         public static double DistanceFromPointToLine(PointF pt, PointF lineStart, PointF lineEnd, out PointF pointOnLine, out bool outside, bool isGeo)
         {
@@ -341,7 +341,7 @@ namespace LineComparer
 
     public class GeoUtils
     {
-        // Рассчет расстояния       
+        // ГђГ Г±Г±Г·ГҐГІ Г°Г Г±Г±ГІГ®ГїГ­ГЁГї       
         #region LENGTH
         public static float GetLengthMeters(double StartLat, double StartLong, double EndLat, double EndLong, bool radians)
         {
@@ -365,26 +365,26 @@ namespace LineComparer
         // Slower
         public static uint GetLengthMetersA(double StartLat, double StartLong, double EndLat, double EndLong, bool radians)
         {
-            double D2R = Math.PI / 180;     // Преобразование градусов в радианы
+            double D2R = Math.PI / 180;     // ГЏГ°ГҐГ®ГЎГ°Г Г§Г®ГўГ Г­ГЁГҐ ГЈГ°Г Г¤ГіГ±Г®Гў Гў Г°Г Г¤ГЁГ Г­Г»
 
             double a = 6378137.0000;     // WGS-84 Equatorial Radius (a)
             double f = 1 / 298.257223563;  // WGS-84 Flattening (f)
             double b = (1 - f) * a;      // WGS-84 Polar Radius
-            double e2 = (2 - f) * f;      // WGS-84 Квадрат эксцентричности эллипсоида  // 1-(b/a)^2
+            double e2 = (2 - f) * f;      // WGS-84 ГЉГўГ Г¤Г°Г ГІ ГЅГЄГ±Г¶ГҐГ­ГІГ°ГЁГ·Г­Г®Г±ГІГЁ ГЅГ«Г«ГЁГЇГ±Г®ГЁГ¤Г   // 1-(b/a)^2
 
-            // Переменные, используемые для вычисления смещения и расстояния
-            double fPhimean;                           // Средняя широта
-            double fdLambda;                           // Разница между двумя значениями долготы
-            double fdPhi;                           // Разница между двумя значениями широты
-            double fAlpha;                           // Смещение
-            double fRho;                           // Меридианский радиус кривизны
-            double fNu;                           // Поперечный радиус кривизны
-            double fR;                           // Радиус сферы Земли
-            double fz;                           // Угловое расстояние от центра сфероида
-            double fTemp;                           // Временная переменная, использующаяся в вычислениях
+            // ГЏГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ, ГЁГ±ГЇГ®Г«ГјГ§ГіГҐГ¬Г»ГҐ Г¤Г«Гї ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГї Г±Г¬ГҐГ№ГҐГ­ГЁГї ГЁ Г°Г Г±Г±ГІГ®ГїГ­ГЁГї
+            double fPhimean;                           // Г‘Г°ГҐГ¤Г­ГїГї ГёГЁГ°Г®ГІГ 
+            double fdLambda;                           // ГђГ Г§Г­ГЁГ¶Г  Г¬ГҐГ¦Г¤Гі Г¤ГўГіГ¬Гї Г§Г­Г Г·ГҐГ­ГЁГїГ¬ГЁ Г¤Г®Г«ГЈГ®ГІГ»
+            double fdPhi;                           // ГђГ Г§Г­ГЁГ¶Г  Г¬ГҐГ¦Г¤Гі Г¤ГўГіГ¬Гї Г§Г­Г Г·ГҐГ­ГЁГїГ¬ГЁ ГёГЁГ°Г®ГІГ»
+            double fAlpha;                           // Г‘Г¬ГҐГ№ГҐГ­ГЁГҐ
+            double fRho;                           // ГЊГҐГ°ГЁГ¤ГЁГ Г­Г±ГЄГЁГ© Г°Г Г¤ГЁГіГ± ГЄГ°ГЁГўГЁГ§Г­Г»
+            double fNu;                           // ГЏГ®ГЇГҐГ°ГҐГ·Г­Г»Г© Г°Г Г¤ГЁГіГ± ГЄГ°ГЁГўГЁГ§Г­Г»
+            double fR;                           // ГђГ Г¤ГЁГіГ± Г±ГґГҐГ°Г» Г‡ГҐГ¬Г«ГЁ
+            double fz;                           // Г“ГЈГ«Г®ГўГ®ГҐ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ Г®ГІ Г¶ГҐГ­ГІГ°Г  Г±ГґГҐГ°Г®ГЁГ¤Г 
+            double fTemp;                           // Г‚Г°ГҐГ¬ГҐГ­Г­Г Гї ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г Гї, ГЁГ±ГЇГ®Г«ГјГ§ГіГѕГ№Г ГїГ±Гї Гў ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГїГµ
 
-            // Вычисляем разницу между двумя долготами и широтами и получаем среднюю широту
-            // предположительно что расстояние между точками << радиуса земли
+            // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ Г°Г Г§Г­ГЁГ¶Гі Г¬ГҐГ¦Г¤Гі Г¤ГўГіГ¬Гї Г¤Г®Г«ГЈГ®ГІГ Г¬ГЁ ГЁ ГёГЁГ°Г®ГІГ Г¬ГЁ ГЁ ГЇГ®Г«ГіГ·Г ГҐГ¬ Г±Г°ГҐГ¤Г­ГѕГѕ ГёГЁГ°Г®ГІГі
+            // ГЇГ°ГҐГ¤ГЇГ®Г«Г®Г¦ГЁГІГҐГ«ГјГ­Г® Г·ГІГ® Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ Г¬ГҐГ¦Г¤Гі ГІГ®Г·ГЄГ Г¬ГЁ << Г°Г Г¤ГЁГіГ±Г  Г§ГҐГ¬Г«ГЁ
             if (!radians)
             {
                 fdLambda = (StartLong - EndLong) * D2R;
@@ -398,12 +398,12 @@ namespace LineComparer
                 fPhimean = (StartLat + EndLat) / 2;
             };
 
-            // Вычисляем меридианные и поперечные радиусы кривизны средней широты
+            // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ Г¬ГҐГ°ГЁГ¤ГЁГ Г­Г­Г»ГҐ ГЁ ГЇГ®ГЇГҐГ°ГҐГ·Г­Г»ГҐ Г°Г Г¤ГЁГіГ±Г» ГЄГ°ГЁГўГЁГ§Г­Г» Г±Г°ГҐГ¤Г­ГҐГ© ГёГЁГ°Г®ГІГ»
             fTemp = 1 - e2 * (sqr(Math.Sin(fPhimean)));
             fRho = (a * (1 - e2)) / Math.Pow(fTemp, 1.5);
             fNu = a / (Math.Sqrt(1 - e2 * (Math.Sin(fPhimean) * Math.Sin(fPhimean))));
 
-            // Вычисляем угловое расстояние
+            // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ ГіГЈГ«Г®ГўГ®ГҐ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ
             if (!radians)
             {
                 fz = Math.Sqrt(sqr(Math.Sin(fdPhi / 2.0)) + Math.Cos(EndLat * D2R) * Math.Cos(StartLat * D2R) * sqr(Math.Sin(fdLambda / 2.0)));
@@ -414,7 +414,7 @@ namespace LineComparer
             };
             fz = 2 * Math.Asin(fz);
 
-            // Вычисляем смещение
+            // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ Г±Г¬ГҐГ№ГҐГ­ГЁГҐ
             if (!radians)
             {
                 fAlpha = Math.Cos(EndLat * D2R) * Math.Sin(fdLambda) * 1 / Math.Sin(fz);
@@ -425,9 +425,9 @@ namespace LineComparer
             };
             fAlpha = Math.Asin(fAlpha);
 
-            // Вычисляем радиус Земли
+            // Г‚Г»Г·ГЁГ±Г«ГїГҐГ¬ Г°Г Г¤ГЁГіГ± Г‡ГҐГ¬Г«ГЁ
             fR = (fRho * fNu) / (fRho * sqr(Math.Sin(fAlpha)) + fNu * sqr(Math.Cos(fAlpha)));
-            // Получаем расстояние
+            // ГЏГ®Г«ГіГ·Г ГҐГ¬ Г°Г Г±Г±ГІГ®ГїГ­ГЁГҐ
             return (uint)Math.Round(Math.Abs(fz * fR));
         }
         // Slowest
